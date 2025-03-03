@@ -64,7 +64,7 @@ class CustomStatusPresets : Plugin() {
                     RecyclerView(ctx).apply {
                         adapter = presetAdapter
                         layoutManager = LinearLayoutManager(ctx)
-                        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 550.dp)
+                        layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 460.dp)
                     }
                 )
             }
