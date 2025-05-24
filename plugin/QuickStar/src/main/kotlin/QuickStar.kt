@@ -17,6 +17,7 @@ import com.discord.stores.StoreStream
 import com.discord.utilities.color.ColorCompat
 import com.discord.widgets.chat.list.actions.WidgetChatListActions
 import com.lytefast.flexinput.R
+import kotlin.random.Random
 
 @Suppress("MISSING_DEPENDENCY_SUPERCLASS")
 @AliucordPlugin
@@ -29,10 +30,15 @@ class QuickStar : Plugin() {
 
     private fun WidgetChatListActions.addReaction(emoji: Emoji) = WidgetChatListActions.`access$addReaction`(this, emoji)
 
+    private fun getRandomStarEmoji(): Emoji {
+        val starEmojiNames = listOf("dizzy", "star", "star2", "sparkles")
+        val randomEmojiName = starEmojiNames[Random.nextInt(starEmojiNames.size)]
+        return StoreStream.getEmojis().unicodeEmojisNamesMap[randomEmojiName]!!
+    }
+
     override fun start(context: Context) {
         val actionsContainerId = Utils.getResId("dialog_chat_actions_container", "id")
         val quickStarId = View.generateViewId()
-        val starEmoji = StoreStream.getEmojis().unicodeEmojisNamesMap["star"]!!
         val icon = ContextCompat.getDrawable(context, R.e.ic_star_24dp)
 
         patcher.after<WidgetChatListActions>(
@@ -48,7 +54,8 @@ class QuickStar : Plugin() {
                     View.GONE
                 }
                 setOnClickListener {
-                    addReaction(starEmoji)
+                    val randomStarEmoji = getRandomStarEmoji()
+                    addReaction(randomStarEmoji)
                     dismiss()
                 }
             }
